@@ -1,0 +1,109 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 255 85% 65%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 255 85% 65%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 255 85% 65%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 255 85% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
+  }
+}
+
+.form-builder-container {
+  @apply max-w-5xl mx-auto p-6;
+}
+
+.form-field {
+  @apply relative border rounded-lg p-6 mb-4 transition-all duration-200 hover:shadow-md bg-card/50 backdrop-blur-sm;
+}
+
+.field-type-selector {
+  @apply w-full p-3 rounded-lg bg-secondary/50 backdrop-blur-sm border mb-4;
+}
+
+.add-field-button {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity;
+}
+
+.validation-error {
+  @apply text-destructive text-sm mt-1 animate-shake;
+}
+
+.json-preview {
+  @apply bg-secondary/30 backdrop-blur-sm rounded-lg p-4 font-mono text-sm;
+}
+
+.form-preview {
+  @apply bg-card/50 backdrop-blur-md border rounded-lg shadow-lg p-6;
+}
+
+.glass-panel {
+  @apply bg-card/50 backdrop-blur-md border rounded-lg shadow-lg transition-all duration-300;
+}
+
+.shimmer {
+  @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent;
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary/30;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50 rounded-full hover:bg-primary/70 transition-colors;
+}

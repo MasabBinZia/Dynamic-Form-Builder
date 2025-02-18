@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 export type FieldType = 
@@ -19,6 +18,11 @@ export interface ValidationRule {
   message: string;
 }
 
+export interface FormOption {
+  label: string;
+  value: string;
+}
+
 export interface FormField {
   id: string;
   type: FieldType;
@@ -26,7 +30,7 @@ export interface FormField {
   required: boolean;
   placeholder?: string;
   validationRules?: ValidationRule[];
-  options?: string[];
+  options?: FormOption[];
   conditionalDisplay?: {
     dependsOn: string;
     value: string;

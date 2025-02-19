@@ -34,6 +34,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { CountryDropdown } from "@/components/ui/country-dropdown";
+import { PhoneInput } from "@/components/ui/phone-input";
 
 interface FormPreviewProps {
   formDefinition: FormDefinition;
@@ -58,15 +60,16 @@ const FormPreview = ({ formDefinition }: FormPreviewProps) => {
               fieldSchema = z.string().regex(/^\d+$/, "Must be a number");
               break;
             case "tel":
-              fieldSchema = z
-                .string()
-                .regex(/^\+?[\d\s-]+$/, "Invalid phone number");
+              fieldSchema = z.string().min(1, "Phone number is required");
               break;
             case "checkbox":
               fieldSchema = z.boolean().default(false);
               break;
             case "select":
             case "radio":
+              fieldSchema = z.string();
+              break;
+            case "country":
               fieldSchema = z.string();
               break;
             default:
@@ -135,6 +138,23 @@ const FormPreview = ({ formDefinition }: FormPreviewProps) => {
 
   const renderField = (field: any, formField: any) => {
     switch (field.type) {
+      case "tel":
+        return (
+          <PhoneInput
+            value={formField.value}
+            onChange={(value) => formField.onChange(value)}
+            placeholder={field.placeholder || "Enter phone number"}
+            defaultCountry="US"
+          />
+        );
+      case "country":
+        return (
+          <CountryDropdown
+            onChange={(country) => formField.onChange(country.alpha3)}
+            defaultValue={formField.value}
+            placeholder={field.placeholder || "Select a country"}
+          />
+        );
       case "select":
         return (
           <Select value={formField.value} onValueChange={formField.onChange}>

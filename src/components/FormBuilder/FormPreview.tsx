@@ -72,6 +72,9 @@ const FormPreview = ({ formDefinition }: FormPreviewProps) => {
             case "country":
               fieldSchema = z.string();
               break;
+            case "date":
+              fieldSchema = z.date().nullable();
+              break;
             default:
               fieldSchema = z.string();
           }
@@ -191,6 +194,35 @@ const FormPreview = ({ formDefinition }: FormPreviewProps) => {
             ))}
           </RadioGroup>
         );
+      case "date":
+        return (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal",
+                  !formField.value && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {formField.value
+                  ? format(new Date(formField.value), "PPP")
+                  : "Pick a date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={
+                  formField.value ? new Date(formField.value) : undefined
+                }
+                onSelect={formField.onChange}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        );
       default:
         return (
           <Input
@@ -207,11 +239,11 @@ const FormPreview = ({ formDefinition }: FormPreviewProps) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {formDefinition.sections.map((section) => (
-            <Card key={section.id}>
+            <Card key={section.id} className="">
               <CardHeader>
                 <CardTitle>{section.title}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="grid lg:grid-cols-2 gap-4">
                 {section.fields.map((field) => (
                   <FormField
                     key={field.id}

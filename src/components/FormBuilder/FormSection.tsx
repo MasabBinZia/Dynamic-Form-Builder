@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 interface ValidationRule {
   type: "min" | "max" | "email" | "regex"; // Add other types as needed
@@ -32,7 +33,7 @@ const FormSection = ({ section, onUpdate, onDelete }: FormSectionProps) => {
     const newField: IFormField = {
       id: crypto.randomUUID(),
       type: "text",
-      label: "",
+      label: "New Field",
       required: false,
       options: [],
     };
@@ -43,6 +44,10 @@ const FormSection = ({ section, onUpdate, onDelete }: FormSectionProps) => {
   };
 
   const updateField = (fieldId: string, updates: Partial<IFormField>) => {
+    if ("label" in updates && !updates.label?.trim()) {
+      return;
+    }
+
     onUpdate({
       ...section,
       fields: section.fields.map((field) =>
@@ -91,7 +96,7 @@ const FormSection = ({ section, onUpdate, onDelete }: FormSectionProps) => {
           <Trash2 className="h-4 w-4" />
         </Button>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="grid grid-cols-2 gap-4">
         {section.fields.map((field) => (
           <div key={field.id} className="space-y-4 p-4 border rounded-lg">
             <div className="flex justify-between items-start gap-4">
@@ -105,7 +110,9 @@ const FormSection = ({ section, onUpdate, onDelete }: FormSectionProps) => {
                   onChange={(e) =>
                     updateField(field.id, { label: e.target.value })
                   }
-                  placeholder="Field Label"
+                  placeholder="Field Label (Required)"
+                  className={cn("border", !field.label && "border-destructive")}
+                  required
                 />
                 <Input
                   value={field.placeholder || ""}
